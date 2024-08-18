@@ -1,16 +1,17 @@
 from pydantic import BaseModel
 
 
-class ProjectBase(BaseModel):
-    name: str
+class IssueBase(BaseModel):
+    title: str
     description: str = None
+    project_id: int
 
 
-class ProjectCreate(ProjectBase):
+class IssueCreate(IssueBase):
     pass
 
 
-class Project(ProjectBase):
+class Issue(IssueBase):
     id: int
 
     class Config:

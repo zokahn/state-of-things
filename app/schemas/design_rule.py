@@ -1,16 +1,17 @@
 from pydantic import BaseModel
 
 
-class ProjectBase(BaseModel):
+class DesignRuleBase(BaseModel):
     name: str
     description: str = None
+    project_id: int
 
 
-class ProjectCreate(ProjectBase):
+class DesignRuleCreate(DesignRuleBase):
     pass
 
 
-class Project(ProjectBase):
+class DesignRule(DesignRuleBase):
     id: int
 
     class Config:
