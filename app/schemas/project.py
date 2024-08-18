@@ -1,18 +1,22 @@
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from typing import Optional
 from datetime import datetime
 
 class ProjectBase(BaseModel):
     name: str
-    description: str
+    description: Optional[str] = None
 
 class ProjectCreate(ProjectBase):
     pass
 
+class ProjectUpdate(ProjectBase):
+    pass
+
 class Project(ProjectBase):
     id: int
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime
+    updated_at: datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True

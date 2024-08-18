@@ -1,0 +1,9 @@
+/opt/venv/lib/python3.11/site-packages/pydantic/_internal/_config.py:341: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+Traceback (most recent call last):
+  File "/root/project_notes_api/run.py", line 2, in <module>
+    from app.main import app
+  File "/root/project_notes_api/app/main.py", line 2, in <module>
+    from app.models.models import ProjectModel
+ImportError: cannot import name 'ProjectModel' from 'app.models.models' (/root/project_notes_api/app/models/models.py)

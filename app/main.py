@@ -1,54 +1,60 @@
 
-import logging
 from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from .models.models import Project as ProjectModel
-from .schemas.project import Project, ProjectCreate
-from datetime import datetime
-from .db.database import SessionLocal, engine, Base, drop_all
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from app.db.database import get_db
+from app.models.models import Project as ProjectModel
+from app.schemas.project import ProjectCreate, ProjectUpdate, Project
+import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
-Base.metadata.create_all(bind=engine)
-
-def reset_database():
-    logger.info("Resetting database...")
-    drop_all(engine)
-    Base.metadata.create_all(bind=engine)
-    logger.info("Database reset completed.")
-
-reset_database()
 
 app = FastAPI()
 
-def get_db():
-    db = SessionLocal()
+@app.get('/')
+async def read_root():
+    return {'Hello': 'World'}
+
+@app.post('/api/v1/projects/', response_model=Project)
+async def create_project(project: ProjectCreate, db: AsyncSession = Depends(get_db)):
     try:
-        yield db
-    finally:
-        db.close()
+        db_project = ProjectModel(**project.dict())
+        db.add(db_project)
+        await db.commit()
+        await db.refresh(db_project)
+        return db_project
+    except Exception as e:
+        logger.error(f'Error creating project: {str(e)}')
+        raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/api/v1/projects/", response_model=Project)
-def create_project(project: ProjectCreate, db: Session = Depends(get_db)):
-    now = datetime.utcnow()
-    logger.info(f"Attempting to create project: {project}")
-    db_project = ProjectModel(**project.model_dump(), created_at=now, updated_at=now)
-    db.add(db_project)
-    db.commit()
-    db.refresh(db_project)
-    logger.info(f"Project created: {db_project}")
-    logger.info(f"Created at: {db_project.created_at}, Updated at: {db_project.updated_at}")
-    return Project.model_validate(db_project)
+@app.get('/api/v1/projects/', response_model=list[Project])
+async def read_projects(db: AsyncSession = Depends(get_db)):
+    try:
+        result = await db.execute(select(ProjectModel))
+        projects = result.scalars().all()
+        return projects
+    except Exception as e:
+        logger.error(f'Error listing projects: {str(e)}')
+        raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/v1/projects/", response_model=list[Project])
-def read_projects(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    logger.info(f"Attempting to read projects. skip: {skip}, limit: {limit}")
-    projects = db.query(ProjectModel).offset(skip).limit(limit).all()
-    logger.info(f"Projects retrieved: {projects}")
-    return [Project.model_validate(project) for project in projects]
+@app.put('/api/v1/projects/{project_id}', response_model=Project)
+async def update_project(project_id: int, project: ProjectUpdate, db: AsyncSession = Depends(get_db)):
+    try:
+        async with db.begin():
+            db_project = await db.get(ProjectModel, project_id)
+            if db_project is None:
+                raise HTTPException(status_code=404, detail='Project not found')
+            update_data = project.dict(exclude_unset=True)
+            for key, value in update_data.items():
+                setattr(db_project, key, value)
+            await db.commit()
+            await db.refresh(db_project)
+        return db_project
+    except Exception as e:
+        logger.error(f'Error updating project: {str(e)}')
+        raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/")
-def read_root():
-    logger.info("Root endpoint accessed")
-    return {"Hello": "World"}
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host='0.0.0.0', port=8123)

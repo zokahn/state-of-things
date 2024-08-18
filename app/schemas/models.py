@@ -13,7 +13,7 @@ class ProjectCreate(ProjectBase):
 class Project(ProjectBase):
     id: int
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
