@@ -79,3 +79,25 @@ python /root/companion_script.py read --url http://api.example.com --token abc12
 python /root/companion_script.py write --url http://api.example.com --token abc123 --project proj001
 ```
 
+
+## Companion Script
+
+A companion script has been added to interact with the Project Management API. It provides two modes: read and write.
+
+### Usage:
+```
+python companion_script.py [mode] --url [API_URL] --token [API_TOKEN] --project [PROJECT_ID]
+```
+
+Where:
+- [mode] is either 'read' or 'write'
+- [API_URL] is the base URL of the Project Management API
+- [API_TOKEN] is the authentication token for the API
+- [PROJECT_ID] is the identifier of the project to interact with
+
+Example usage:
+```
+python companion_script.py read --url http://api.example.com --token abc123 --project proj001
+python companion_script.py write --url http://api.example.com --token abc123 --project proj001
+```
+
