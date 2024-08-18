@@ -1,103 +1,46 @@
-# Project Notes Management API
 
-This project implements an API for managing project notes, including features for creating and listing projects, changelogs, requirements, and recurring problems.
+# Project Notes API
+
+This is a FastAPI-based API for managing project notes, tasks, issues, and related information.
 
 ## Features
 
-- Create, list, and update projects
-- Add and list changelogs for projects
-- Add and list requirements for projects
-- Add and list recurring problems for projects
-- Get project categories with counts of changelogs, requirements, and recurring problems
+- CRUD operations for Projects, Tasks, Issues, Design Rules, Requirements, Project Goals, and SBOM (Software Bill of Materials)
+- SQLAlchemy ORM for database interactions
+- Pydantic models for request/response validation
 
-## Project Structure
-
-- `/root/project_notes_api/`: Main API implementation
-- `/root/project_notes_api/tests/`: Test files for the API
-- `/root/scripts/project_notes_client.py`: Companion script to interact with the API
-
-## Setup and Installation
+## Setup
 
 1. Clone the repository
-2. Install dependencies:
-   ```
-   pip install fastapi sqlalchemy httpx requests
-   ```
-3. Run the API:
-   ```
-   uvicorn main:app --reload
-   ```
+2. Install dependencies: `pip install -r requirements.txt`
+3. Set up the database (instructions to be added)
+4. Run the application: `uvicorn main:app --reload`
 
-## Testing
+## API Endpoints
 
-Run tests using pytest:
+- `/projects/`: Manage projects
+- `/tasks/`: Manage tasks
+- `/issues/`: Manage issues
+- `/design_rules/`: Manage design rules
+- `/requirements/`: Manage requirements
+- `/project_goals/`: Manage project goals
+- `/sboms/`: Manage Software Bill of Materials
 
-```
-python -m pytest tests/
-```
+For detailed API documentation, run the server and visit `/docs` endpoint.
 
 ## TODO
 
-- Debug and fix failing tests
-- Implement error handling and input validation
-- Set up continuous integration
-- Create comprehensive documentation
-- Add more features (e.g., search functionality, data export)
+- Implement relationships between entities
+- Add authentication and authorization
+- Create a front-end interface
+- Optimize performance
+- Add advanced features (reporting, analytics)
+- Set up CI/CD pipeline
 
+## Contributing
 
+Instructions for contributing to be added.
 
-## Next Steps
-1. Complete API Endpoint Testing
-2. Perform Log Analysis
-3. Resolve ASGI App Loading Error
-4. Check Database Connection
-5. Update API Documentation
-6. Implement Remaining CRUD Operations
-7. Begin Authentication Implementation
-8. Implement Error Handling and Data Validation
-9. Conduct Code Review and Refactoring
-10. Plan for Front-end Development
+## License
 
-## Companion Script
-
-A companion script has been added to interact with the Project Management API. It provides two modes: read and write.
-
-### Usage:
-```
-python /root/companion_script.py [mode] --url [API_URL] --token [API_TOKEN] --project [PROJECT_ID]
-```
-
-Where:
-- [mode] is either 'read' or 'write'
-- [API_URL] is the base URL of the Project Management API
-- [API_TOKEN] is the authentication token for the API
-- [PROJECT_ID] is the identifier of the project to interact with
-
-Example usage:
-```
-python /root/companion_script.py read --url http://api.example.com --token abc123 --project proj001
-python /root/companion_script.py write --url http://api.example.com --token abc123 --project proj001
-```
-
-
-## Companion Script
-
-A companion script has been added to interact with the Project Management API. It provides two modes: read and write.
-
-### Usage:
-```
-python companion_script.py [mode] --url [API_URL] --token [API_TOKEN] --project [PROJECT_ID]
-```
-
-Where:
-- [mode] is either 'read' or 'write'
-- [API_URL] is the base URL of the Project Management API
-- [API_TOKEN] is the authentication token for the API
-- [PROJECT_ID] is the identifier of the project to interact with
-
-Example usage:
-```
-python companion_script.py read --url http://api.example.com --token abc123 --project proj001
-python companion_script.py write --url http://api.example.com --token abc123 --project proj001
-```
-
+To be determined.
