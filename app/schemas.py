@@ -1,5 +1,5 @@
 
-from .schemas.project import Project, ProjectCreate, ProjectBase
+from .schemas.project import Project, ProjectCreate, ProjectUpdate, ProjectBase
 from .schemas.task import Task, TaskCreate, TaskBase
 from .schemas.issue import Issue, IssueCreate, IssueBase
 from .schemas.design_rule import DesignRule, DesignRuleCreate, DesignRuleBase
@@ -9,7 +9,7 @@ from .schemas.sbom import SBOM, SBOMCreate, SBOMBase
 
 # Re-export all schemas
 __all__ = [
-    "Project", "ProjectCreate", "ProjectBase",
+    "Project", "ProjectCreate", "ProjectUpdate", "ProjectBase",
     "Task", "TaskCreate", "TaskBase",
     "Issue", "IssueCreate", "IssueBase",
     "DesignRule", "DesignRuleCreate", "DesignRuleBase",
