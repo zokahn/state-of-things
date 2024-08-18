@@ -1,135 +1,56 @@
-/opt/venv/lib/python3.11/site-packages/pydantic/_internal/_config.py:341: UserWarning: Valid config keys have changed in V2:
-* 'orm_mode' has been renamed to 'from_attributes'
-  warnings.warn(message, UserWarning)
-DEBUG:asyncio:Using selector: EpollSelector
-INFO:     Started server process [279]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:8123 (Press CTRL+C to quit)
-DEBUG:aiosqlite:executing <function connect.<locals>.connector at 0x7fd9741eccc0>
-DEBUG:aiosqlite:operation <function connect.<locals>.connector at 0x7fd9741eccc0> completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741bb6a0>, 'regexp', 2, <function SQLiteDialect_pysqlite.on_connect.<locals>.regexp at 0x7fd9745268e0>, deterministic=True)
-DEBUG:aiosqlite:operation functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741bb6a0>, 'regexp', 2, <function SQLiteDialect_pysqlite.on_connect.<locals>.regexp at 0x7fd9745268e0>, deterministic=True) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741bb6a0>, 'floor', 1, <built-in function floor>, deterministic=True)
-DEBUG:aiosqlite:operation functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741bb6a0>, 'floor', 1, <built-in function floor>, deterministic=True) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method cursor of sqlite3.Connection object at 0x7fd9741bb6a0>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method cursor of sqlite3.Connection object at 0x7fd9741bb6a0>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method execute of sqlite3.Cursor object at 0x7fd9741d1c40>, 'PRAGMA read_uncommitted', [])
-DEBUG:aiosqlite:operation functools.partial(<built-in method execute of sqlite3.Cursor object at 0x7fd9741d1c40>, 'PRAGMA read_uncommitted', []) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method fetchall of sqlite3.Cursor object at 0x7fd9741d1c40>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method fetchall of sqlite3.Cursor object at 0x7fd9741d1c40>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method close of sqlite3.Cursor object at 0x7fd9741d1c40>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method close of sqlite3.Cursor object at 0x7fd9741d1c40>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741bb6a0>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741bb6a0>) completed
-2024-08-18 07:00:27,597 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
-2024-08-18 07:00:27,598 INFO sqlalchemy.engine.Engine SELECT projects.id AS projects_id, projects.name AS projects_name, projects.description AS projects_description 
-FROM projects 
-WHERE projects.id = ?
-INFO:sqlalchemy.engine.Engine:SELECT projects.id AS projects_id, projects.name AS projects_name, projects.description AS projects_description 
-FROM projects 
-WHERE projects.id = ?
-2024-08-18 07:00:27,598 INFO sqlalchemy.engine.Engine [generated in 0.00010s] (1,)
-INFO:sqlalchemy.engine.Engine:[generated in 0.00010s] (1,)
-DEBUG:aiosqlite:executing functools.partial(<built-in method cursor of sqlite3.Connection object at 0x7fd9741bb6a0>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method cursor of sqlite3.Connection object at 0x7fd9741bb6a0>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method execute of sqlite3.Cursor object at 0x7fd974984040>, 'SELECT projects.id AS projects_id, projects.name AS projects_name, projects.description AS projects_description \nFROM projects \nWHERE projects.id = ?', (1,))
-DEBUG:aiosqlite:operation functools.partial(<built-in method execute of sqlite3.Cursor object at 0x7fd974984040>, 'SELECT projects.id AS projects_id, projects.name AS projects_name, projects.description AS projects_description \nFROM projects \nWHERE projects.id = ?', (1,)) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method fetchall of sqlite3.Cursor object at 0x7fd974984040>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method fetchall of sqlite3.Cursor object at 0x7fd974984040>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method close of sqlite3.Cursor object at 0x7fd974984040>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method close of sqlite3.Cursor object at 0x7fd974984040>) completed
-2024-08-18 07:00:27,599 INFO sqlalchemy.engine.Engine COMMIT
-INFO:sqlalchemy.engine.Engine:COMMIT
-DEBUG:aiosqlite:executing functools.partial(<built-in method commit of sqlite3.Connection object at 0x7fd9741bb6a0>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method commit of sqlite3.Connection object at 0x7fd9741bb6a0>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741bb6a0>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741bb6a0>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method close of sqlite3.Connection object at 0x7fd9741bb6a0>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method close of sqlite3.Connection object at 0x7fd9741bb6a0>) completed
-ERROR:app.main:Error updating project: Can't operate on closed transaction inside context manager.  Please complete the context manager before emitting further commands.
-INFO:     127.0.0.1:58646 - "PUT /api/v1/projects/1 HTTP/1.1" 500 Internal Server Error
-DEBUG:aiosqlite:executing <function connect.<locals>.connector at 0x7fd9741ecfe0>
-DEBUG:aiosqlite:operation <function connect.<locals>.connector at 0x7fd9741ecfe0> completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741faf20>, 'regexp', 2, <function SQLiteDialect_pysqlite.on_connect.<locals>.regexp at 0x7fd9745268e0>, deterministic=True)
-DEBUG:aiosqlite:operation functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741faf20>, 'regexp', 2, <function SQLiteDialect_pysqlite.on_connect.<locals>.regexp at 0x7fd9745268e0>, deterministic=True) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741faf20>, 'floor', 1, <built-in function floor>, deterministic=True)
-DEBUG:aiosqlite:operation functools.partial(<built-in method create_function of sqlite3.Connection object at 0x7fd9741faf20>, 'floor', 1, <built-in function floor>, deterministic=True) completed
-2024-08-18 07:00:27,602 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-INFO:sqlalchemy.engine.Engine:BEGIN (implicit)
-2024-08-18 07:00:27,602 INFO sqlalchemy.engine.Engine SELECT projects.id, projects.name, projects.description 
-FROM projects
-INFO:sqlalchemy.engine.Engine:SELECT projects.id, projects.name, projects.description 
-FROM projects
-2024-08-18 07:00:27,602 INFO sqlalchemy.engine.Engine [generated in 0.00007s] ()
-INFO:sqlalchemy.engine.Engine:[generated in 0.00007s] ()
-DEBUG:aiosqlite:executing functools.partial(<built-in method cursor of sqlite3.Connection object at 0x7fd9741faf20>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method cursor of sqlite3.Connection object at 0x7fd9741faf20>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method execute of sqlite3.Cursor object at 0x7fd9741d1140>, 'SELECT projects.id, projects.name, projects.description \nFROM projects', ())
-DEBUG:aiosqlite:operation functools.partial(<built-in method execute of sqlite3.Cursor object at 0x7fd9741d1140>, 'SELECT projects.id, projects.name, projects.description \nFROM projects', ()) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method fetchall of sqlite3.Cursor object at 0x7fd9741d1140>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method fetchall of sqlite3.Cursor object at 0x7fd9741d1140>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method close of sqlite3.Cursor object at 0x7fd9741d1140>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method close of sqlite3.Cursor object at 0x7fd9741d1140>) completed
-2024-08-18 07:00:27,603 INFO sqlalchemy.engine.Engine ROLLBACK
-INFO:sqlalchemy.engine.Engine:ROLLBACK
-DEBUG:aiosqlite:executing functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741faf20>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741faf20>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741faf20>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method rollback of sqlite3.Connection object at 0x7fd9741faf20>) completed
-DEBUG:aiosqlite:executing functools.partial(<built-in method close of sqlite3.Connection object at 0x7fd9741faf20>)
-DEBUG:aiosqlite:operation functools.partial(<built-in method close of sqlite3.Connection object at 0x7fd9741faf20>) completed
-INFO:     127.0.0.1:58650 - "GET /api/v1/projects/ HTTP/1.1" 500 Internal Server Error
-ERROR:    Exception in ASGI application
+nohup: ignoring input
 Traceback (most recent call last):
-  File "/opt/venv/lib/python3.11/site-packages/uvicorn/protocols/http/h11_impl.py", line 406, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/venv/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
-    return await self.app(scope, receive, send)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/venv/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
-    await super().__call__(scope, receive, send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/applications.py", line 123, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/middleware/errors.py", line 186, in __call__
-    raise exc
-  File "/opt/venv/lib/python3.11/site-packages/starlette/middleware/errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 65, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/opt/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/routing.py", line 754, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/routing.py", line 774, in app
-    await route.handle(scope, receive, send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/routing.py", line 295, in handle
-    await self.app(scope, receive, send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/routing.py", line 77, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/opt/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/opt/venv/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-  File "/opt/venv/lib/python3.11/site-packages/fastapi/routing.py", line 296, in app
-    content = await serialize_response(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/venv/lib/python3.11/site-packages/fastapi/routing.py", line 155, in serialize_response
-    raise ResponseValidationError(
-fastapi.exceptions.ResponseValidationError: 4 validation errors:
-  {'type': 'missing', 'loc': ('response', 0, 'created_at'), 'msg': 'Field required', 'input': <app.models.models.Project object at 0x7fd974206c90>}
-  {'type': 'missing', 'loc': ('response', 0, 'updated_at'), 'msg': 'Field required', 'input': <app.models.models.Project object at 0x7fd974206c90>}
-  {'type': 'missing', 'loc': ('response', 1, 'created_at'), 'msg': 'Field required', 'input': <app.models.models.Project object at 0x7fd974206d10>}
-  {'type': 'missing', 'loc': ('response', 1, 'updated_at'), 'msg': 'Field required', 'input': <app.models.models.Project object at 0x7fd974206d10>}
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [268]
+  File "/opt/venv/bin/uvicorn", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/venv/lib/python3.11/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.11/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.11/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.11/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.11/site-packages/uvicorn/main.py", line 425, in main
+    run(app, **kwargs)
+  File "/opt/venv/lib/python3.11/site-packages/uvicorn/main.py", line 447, in run
+    server.run()
+  File "/opt/venv/lib/python3.11/site-packages/uvicorn/server.py", line 68, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.11/site-packages/uvicorn/server.py", line 76, in serve
+    config.load()
+  File "/opt/venv/lib/python3.11/site-packages/uvicorn/config.py", line 448, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/root/project_notes_api/app/main.py", line 51
+    def create_project(*args, **kwargs):
+    ^
+IndentationError: expected an indented block after function definition on line 50
