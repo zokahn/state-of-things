@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session
-from . import models, schemas
+from . import models
+from .schemas import ProjectCreate, ProjectUpdate, TaskCreate, TaskUpdate
 
 # Project CRUD operations
-def create_project(db: Session, project: schemas.ProjectCreate):
+def create_project(db: Session, project: ProjectCreate):
     db_project = models.Project(**project.dict())
     db.add(db_project)
     db.commit()
@@ -15,7 +16,7 @@ def get_projects(db: Session, skip: int = 0, limit: int = 100):
 def get_project(db: Session, project_id: int):
     return db.query(models.Project).filter(models.Project.id == project_id).first()
 
-def update_project(db: Session, project_id: int, project: schemas.ProjectUpdate):
+def update_project(db: Session, project_id: int, project: ProjectUpdate):
     db_project = db.query(models.Project).filter(models.Project.id == project_id).first()
     if db_project:
         update_data = project.dict(exclude_unset=True)
@@ -33,7 +34,7 @@ def delete_project(db: Session, project_id: int):
     return db_project
 
 # Task CRUD operations
-def create_task(db: Session, task: schemas.TaskCreate):
+def create_task(db: Session, task: TaskCreate):
     db_task = models.Task(**task.dict())
     db.add(db_task)
     db.commit()
@@ -46,7 +47,7 @@ def get_tasks(db: Session, skip: int = 0, limit: int = 100):
 def get_task(db: Session, task_id: int):
     return db.query(models.Task).filter(models.Task.id == task_id).first()
 
-def update_task(db: Session, task_id: int, task: schemas.TaskUpdate):
+def update_task(db: Session, task_id: int, task: TaskUpdate):
     db_task = db.query(models.Task).filter(models.Task.id == task_id).first()
     if db_task:
         update_data = task.dict(exclude_unset=True)
