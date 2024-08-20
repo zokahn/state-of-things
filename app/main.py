@@ -1,137 +1,43 @@
 
-from fastapi import FastAPI, HTTPException, Depends
+from datetime import timedelta
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import SQLAlchemyError
-from . import crud, schemas
-from .models import Base
-from . import models
-from .database import SessionLocal, engine
-import logging
-import traceback
+from app import crud, models, schemas, auth
+from app.database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+@app.post("/users/", response_model=schemas.User)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_email(db, email=user.email)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    return crud.create_user(db=db, user=user)
 
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+@app.post("/token", response_model=schemas.Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = auth.authenticate_user(db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth.create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
 
-def log_input_validation(func):
-    def wrapper(*args, **kwargs):
-        logger.info(f"Input validation for {func.__name__}: {kwargs}")
-        return func(*args, **kwargs)
-    return wrapper
+@app.get("/users/me/", response_model=schemas.User)
+async def read_users_me(current_user: models.User = Depends(auth.get_current_active_user)):
+    return current_user
 
-# Project endpoints
-@app.post('/projects/', response_model=schemas.Project)
-@log_input_validation
-def create_project(project: schemas.ProjectCreate, db: Session = Depends(get_db)):
-    try:
-        new_project = crud.create_project(db=db, project=project)
-        logger.info(f"Project created successfully: {new_project.id}")
-        return new_project
-    except SQLAlchemyError as e:
-        logger.error(f"Database error while creating project: {str(e)}")
-        raise HTTPException(status_code=500, detail="Database error occurred")
-    except Exception as e:
-        logger.error(f"Unexpected error creating project: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
+@app.get("/users/me/items/")
+async def read_own_items(current_user: models.User = Depends(auth.get_current_active_user)):
+    return [{"item_id": "Foo", "owner": current_user.username}]
 
-@app.get('/projects/', response_model=list[schemas.Project])
-@log_input_validation
-def read_projects(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    try:
-        projects = crud.get_projects(db, skip=skip, limit=limit)
-        logger.info(f"Retrieved {len(projects)} projects")
-        return projects
-    except SQLAlchemyError as e:
-        logger.error(f"Database error while reading projects: {str(e)}")
-        raise HTTPException(status_code=500, detail="Database error occurred")
-    except Exception as e:
-        logger.error(f"Unexpected error reading projects: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-@app.get('/projects/{project_id}', response_model=schemas.Project)
-@log_input_validation
-def read_project(project_id: int, db: Session = Depends(get_db)):
-    try:
-        db_project = crud.get_project(db, project_id=project_id)
-        if db_project is None:
-            logger.warning(f"Project not found: {project_id}")
-            raise HTTPException(status_code=404, detail="Project not found")
-        logger.info(f"Retrieved project: {project_id}")
-        return db_project
-    except SQLAlchemyError as e:
-        logger.error(f"Database error while reading project {project_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail="Database error occurred")
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error reading project {project_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-@app.put('/projects/{project_id}', response_model=schemas.Project)
-@log_input_validation
-def update_project(project_id: int, project: schemas.ProjectUpdate, db: Session = Depends(get_db)):
-    try:
-        db_project = crud.update_project(db, project_id, project)
-        if db_project is None:
-            raise HTTPException(status_code=404, detail="Project not found")
-        return db_project
-    except SQLAlchemyError as e:
-        logger.error(f"Database error while updating project {project_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail="Database error occurred")
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error updating project {project_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-
-@app.on_event("startup")
-async def startup_event():
-    logger.info("Application startup...")
-    try:
-        # Add any startup logic here
-        logger.info("Startup completed successfully")
-    except Exception as e:
-        logger.error(f"Error during startup: {str(e)}")
-        logger.error(traceback.format_exc())
-        raise
-
-@app.delete('/projects/{project_id}', response_model=schemas.Project)
-@log_input_validation
-def delete_project(project_id: int, db: Session = Depends(get_db)):
-    try:
-        db_project = crud.delete_project(db, project_id=project_id)
-        if db_project is None:
-            logger.warning(f"Project not found for deletion: {project_id}")
-            raise HTTPException(status_code=404, detail="Project not found")
-        logger.info(f"Deleted project: {project_id}")
-        return db_project
-    except SQLAlchemyError as e:
-        logger.error(f"Database error while deleting project {project_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail="Database error occurred")
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error deleting project {project_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    logger.info("Application shutting down...")
-    try:
-        # Add any shutdown logic here
-        logger.info("Shutdown completed successfully")
-    except Exception as e:
-        logger.error(f"Error during shutdown: {str(e)}")
-        logger.error(traceback.format_exc())
+# Add your existing project-related endpoints here

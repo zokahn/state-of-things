@@ -1,3 +1,4 @@
+from pydantic import ConfigDict
 from pydantic import BaseModel
 from typing import Optional
 
@@ -15,5 +16,4 @@ class ProjectUpdate(BaseModel):
 class Project(ProjectBase):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

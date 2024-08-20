@@ -1,3 +1,4 @@
+from pydantic import ConfigDict
 from pydantic import BaseModel
 
 
@@ -14,5 +15,4 @@ class DesignRuleCreate(DesignRuleBase):
 class DesignRule(DesignRuleBase):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

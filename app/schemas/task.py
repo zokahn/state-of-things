@@ -1,3 +1,4 @@
+from pydantic import ConfigDict
 from typing import Optional
 from pydantic import BaseModel
 
@@ -19,5 +20,4 @@ class TaskUpdate(TaskBase):
 class Task(TaskBase):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

@@ -1,4 +1,14 @@
 
+import pytest
+
+@pytest.fixture
+def project_id():
+    # Create a project and return its ID
+    url = f"{BASE_URL}/projects/"
+    data = {"name": "Test Project", "description": "This is a test project"}
+    response = requests.post(url, json=data)
+    return response.json()["id"]
+
 import requests
 import json
 

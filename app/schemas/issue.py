@@ -1,3 +1,4 @@
+from pydantic import ConfigDict
 from pydantic import BaseModel
 
 
@@ -14,5 +15,10 @@ class IssueCreate(IssueBase):
 class Issue(IssueBase):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
+
+class IssueUpdate(BaseModel):
+    title: str | None = None
+    description: str | None = None
+    project_id: int | None = None
